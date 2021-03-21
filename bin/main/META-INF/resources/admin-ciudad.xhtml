@@ -1,0 +1,97 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+	template="/templates/admin-template.xhtml">
+	<ui:define name="contenido">
+
+
+
+
+
+		<h:form id="formListar">
+			<p:growl id="growlEliminar" />
+
+		
+			<p:fieldset legend="Gestión de Localidades">
+					<div align="center">
+					<p:commandButton value="Nueva Ciudad"
+						styleClass="btn btn-outline-info btn-sm"
+						onclick="PF('dialogoCrear').show();" style="margin-right:20px;" />
+				</div>
+				<br/>
+				<p:dataTable var="localidad" value="#{localidadB.listaLocalidad}" id="table" paginator="true" rows="10"> 
+					<p:column headerText="Localidad">
+						<h:outputText value="#{localidad.locaNombre}" />
+					</p:column>
+
+					<p:column headerText="Porcentaje Descuento">
+						<h:outputText value="#{localidad.locaPorcDesc}" />
+					</p:column>
+					<p:column>
+						<b:commandButton value="Editar"
+							actionListener="#{localidadB.leerFila(localidad)}" icon="pencil"
+							oncomplete="PF('dialogoEditar').show();" update="iDialogoEditar"
+							styleClass="btn btn-outline-info btn-sm" icon-size="2x" />
+					</p:column>
+
+				</p:dataTable>
+				
+			
+
+			</p:fieldset>
+
+		</h:form>
+
+		<!-- ************************************DIAGOLO EDITAR******************************************* -->
+		<p:dialog id="iDialogoEditar" widgetVar="dialogoEditar"
+			header="Editar Localidad" responsive="true" draggable="false"
+			resizable="false" closeOnEscape="true" appendTo="@(body)"
+			modal="true" position="top">
+			<h:form>
+
+				<p:panelGrid id="pgEditar" columns="2">
+					<h:outputLabel for="txtNombre" value="Nombre Localidad *" />
+					<p:inputText id="txtNombre" required="true"
+						value="#{localidadB.localidadSelect.locaNombre}"
+						onclick="this.setSelectionRange(0, this.value.length)" />
+					<h:outputLabel for="txtPorcDesc" value="Porcentaje Descuento *" />
+					<p:inputText id="txtPorcDesc" required="true"
+						value="#{localidadB.localidadSelect.locaPorcDesc}"
+						onclick="this.setSelectionRange(0, this.value.length)" />
+					<p:commandButton value="Guardar cambios"
+						actionListener="#{localidadB.actualizar}"
+						styleClass="btn btn-outline-info btn-sm"
+						update=":formListar:table :formListar:growlEliminar"
+						oncomplete="PF('dialogoEditar').hide();" />
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<!-- ************************************DIAGOLO CREAR******************************************** -->
+		<p:dialog id="iDialogoCrear" widgetVar="dialogoCrear"
+			header="Crear Ciudad" responsive="true" draggable="false"
+			resizable="false" closeOnEscape="true" appendTo="@(body)"
+			modal="true" position="top">
+			<h:form>
+
+				<p:panelGrid id="pgCrear" columns="2">
+					<h:outputLabel for="txtNombre" value="Nombre Localidad *" />
+					<p:inputText id="txtNombre" required="true"
+						value="#{localidadB.localidad.locaNombre}" />
+					<h:outputLabel for="txtPorcDesc" value="Porcentaje Descuento *" />
+					<p:inputText id="txtPorcDesc" required="true"
+						value="#{localidadB.localidad.locaPorcDesc}" type="number" />
+					<p:commandButton value="Guardar" actionListener="#{localidadB.crear}"
+						update="iDialogoCrear :formListar:table :formListar:growlEliminar"
+						oncomplete="PF('dialogoCrear').hide();"
+						styleClass="btn btn-outline-info btn-sm" />
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+
+
+	</ui:define>
+
+</ui:composition>

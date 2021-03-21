@@ -1,0 +1,109 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<link rel="stylesheet" href="${request.contextPath}/css/style-aea.css" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<!-- Bootstrap CSS -->
+	<link
+		href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+		rel="stylesheet"
+		integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+		crossorigin="anonymous" />
+	<style type="text/css">
+.footer {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	text-align: center;
+}
+</style>
+</h:head>
+<h:body>
+
+	<br />
+	<br />
+	<br />
+
+	<h:form id="personaForm">
+		<div align="center">
+			<h2>Registro de Personas</h2>
+			<p:panelGrid columns="2">
+			
+				
+				<p:commandButton value="Grabar"
+					actionListener="#{personaB.crearPersona}"
+					update=":formListar :personaForm" />
+						<p:column></p:column>
+			</p:panelGrid>
+		</div>
+
+		<br />
+		
+		<h2>Listado de Personas</h2>
+		<p:outputLabel value="Test"/>
+	</h:form>
+
+
+	<h:form id="formListar">
+		<p:dataTable id="tbPersonas" var="persona"
+			value="#{personaB.personas}">
+			<p:column headerText="Nombre">
+				<h:outputText value="#{persona.persNombre}" />
+			</p:column>
+			
+			<p:column headerText="Operación 1">
+				<b:commandButton value="Editar"
+					actionListener="#{personaB.leerFila(persona)}" icon="pencil"
+					oncomplete="PF('dialogoEditar').show();" update="iDialogoEditar"
+					styleClass="btn btn-outline-info btn-sm" icon-size="2x" />
+			</p:column>
+
+			<p:column headerText="Operación 2">
+				<b:commandButton value="Eliminar"
+					actionListener="#{personaB.eliminar(persona)}" icon="trash"
+					update=":formListar" styleClass="btn btn-outline-info btn-sm"
+					icon-size="2x" />
+			</p:column>
+
+		</p:dataTable>
+	</h:form>
+
+	<p:dialog id="iDialogoEditar" widgetVar="dialogoEditar"
+		header="Editar Persona" responsive="true" draggable="false"
+		resizable="false" closeOnEscape="true" appendTo="@(body)" modal="true"
+		position="top">
+		<h:form>
+
+			<p:panelGrid id="pgEditar" columns="2">
+				<h:outputLabel for="txtNombre" value="Nombre *" />
+				<b:inputText id="txtNombre" required="true"
+					value="#{personaB.personaSelect.persNombre}"
+					onclick="this.setSelectionRange(0, this.value.length)" />
+				
+				<p:commandButton value="Guardar cambios"
+					actionListener="#{personaB.actualizar}" update=":formListar"
+					oncomplete="PF('dialogoEditar').hide();" />
+				
+			</p:panelGrid>
+		</h:form>
+	</p:dialog>
+
+
+	<footer class="footer">
+		<div class="container">
+
+			<div class="float-center">
+
+				<h3>Copyright ©2020 All rights reserved | Desarrollado por
+					Michael Ponce y Estalin Gunza</h3>
+			</div>
+		</div>
+	</footer>
+
+</h:body>
+</html>

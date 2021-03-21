@@ -1,0 +1,69 @@
+body .ui-button, body .ui-layout-unit .ui-layout-unit-header {
+	
+}
+
+body {
+	
+	background:rgb(30, 30, 30)!important;
+	color:white!important;
+
+}
+
+/*Este sirve para quitar el borde  de los panelgrid*/
+.ui-panelgrid tr, .ui-panelgrid td {
+	border: 0 !important;
+}
+
+table.dataTable {
+	border-collapse: collapse !important;
+	
+}
+.dataTables_wrapper.no-footer .dataTables_scrollBody{
+	border-bottom: 0px!important;
+	
+}
+@media screen and (max-width: 768px ) {
+	.modalResponsivo {
+		width: 90% !important;
+	}
+}
+
+@media screen and (min-width: 1024px ) {
+	.modalResponsivo {
+		width: 30% !important;
+	}
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+	.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover
+	{
+	background: white;
+}
+
+button.dt-button, div.dt-button, a.dt-button{
+	color:#00bcd4;
+	background-color: transparent!important;
+	border-color: #00bcd4;
+	margin-left: 8px;
+	font-size: 1.3em;
+	margin-top: 5px;
+}
+
+.ui-datatable-frozenlayout-left {
+      width:20%;
+  }
+ 
+  .ui-datatable-frozenlayout-right {
+      width:80%;
+  }
+  
+
+  
+  #logout{
+  background-color: white!important; 
+    color: #a94343!important;
+   border: 0px !important;
+  }
+body .ui-fieldset .ui-fieldset-legend{
+	background: rgb(31, 126, 208);
+}
