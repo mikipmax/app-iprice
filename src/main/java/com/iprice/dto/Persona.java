@@ -6,6 +6,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -13,6 +14,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 @PrimaryKeyJoinColumn(name = "cred_id")
 public class Persona extends Credencial {
 
@@ -29,4 +31,8 @@ public class Persona extends Credencial {
 	@JoinColumn(name = "loca_id", referencedColumnName = "loca_id")
 	@ManyToOne
 	private Localidad locaId;
+
+	public Persona(int credId) {
+		super(credId);
+	}
 }

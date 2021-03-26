@@ -10,10 +10,10 @@ import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 
+import com.iprice.dto.CategoriaProducto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.annotation.RequestScope;
-import org.springframework.web.context.annotation.SessionScope;
+
 
 import com.iprice.dto.Localidad;
 import com.iprice.dto.Credencial;
@@ -32,171 +32,185 @@ import lombok.Setter;
 @Component("CredencialB")
 public class CredencialB implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	private Credencial acceso;
-	private Credencial accesoSelect;
-	private Persona persona;
-	private Localidad localidad;
-	private List<Localidad> listaLocalidad;
+    private static final long serialVersionUID = 1L;
+    private Credencial acceso;
+    private Credencial accesoSelect;
+    private Persona persona;
+    private Persona personaSelect;
+    private Localidad localidad;
+    private List<Localidad> listaLocalidad;
+    private List<Persona> listaCliente;
+    private List<Credencial> listaCredencial;
 
-	@Autowired
-	private CredencialI servicioCredencial;
-	@Autowired
-	private PersonaI servicioPersona;
-	@Autowired
-	private LocalidadI servicioLocalidad;
-	@Autowired private UtileriaI servicioUtileria;
+    @Autowired
+    private CredencialI servicioCredencial;
+    @Autowired
+    private PersonaI servicioPersona;
+    @Autowired
+    private LocalidadI servicioLocalidad;
+    @Autowired
+    private UtileriaI servicioUtileria;
 
-	/*
-	 * private Contacto contacto; private Contacto contactoSelect; private Empresa
-	 * empresa; private List<Credencial> listaAcceso;
-	 * 
-	 * private List<Contacto> listaContacto;
-	 * 
-	 * private List<Empresa> listaEmpresa;
-	 */
 
-	@PostConstruct
-	public void init() {
+    @PostConstruct
+    public void init() {
 
-		acceso = new Credencial();
-		persona = new Persona();
-		localidad=new Localidad();
-		listaLocalidad=(List<Localidad>) servicioLocalidad.findAll();
+        acceso = new Credencial();
+        accesoSelect = new Credencial();
+        persona = new Persona();
+        personaSelect = new Persona();
+        localidad = new Localidad();
+        listaLocalidad = (List<Localidad>) servicioLocalidad.findAll();
+        listar();
+        listarAdmin();
+    }
 
-		/*
-		 * eso = new Credencial(); contacto = new Contacto(); empresa = new Empresa();
-		 * accesoSelect = new Credencial(); contactoSelect = new Contacto(); listar();
-		 * listarAcceso(); listaEmpresa = (List<Empresa>) empresaServicio.findAll();
-		 */
-	}
+    public void listar() {
 
-	public void listar() {
-		/*
-		 * try {
-		 * 
-		 * listaContacto = (List<Contacto>) contactoServicio.findAll();
-		 * 
-		 * } catch (Exception e) { mensajeError("Error:" + e.getMessage()); }
-		 */
-	}
+        try {
 
-	public void listarAcceso() {
+            listaCliente = (List<Persona>) servicioPersona.findAll();
 
-		/*
-		 * try { listaAcceso = accesoServicio.findByCredRol((short) 1);
-		 * 
-		 * } catch (Exception e) { mensajeError("Error:" + e.getMessage()); }
-		 */
-	}
+        } catch (Exception e) {
+            servicioUtileria.mensajeError("Error:" + e.getMessage());
+        }
 
-	public void registrarNuevoUsuario() {
+    }
 
-		try {
-			
-			persona.setLocaId(localidad);;
-			servicioPersona.save(persona); // accesoServicio.save(acceso);
-			
-		servicioUtileria.mensajeInfo("Registro guardado correctamente");
+    public void listarAdmin() {
 
-		} catch (Exception e) {
-			//mensajeError("No s� ha podido guardar:" + e.getMessage());
+        try {
+            listaCredencial = servicioCredencial.findByCredRolIsTrue();
+        } catch (Exception e) {
+            servicioUtileria.mensajeError("Error:" + e.getMessage());
+        }
 
-		} finally {
+    }
 
-			//listar();
-			persona= new Persona();
-			//empresa = new Empresa();
-		}
+    public void registrarNuevoUsuario() {
 
-	}
+        try {
+            Optional<Localidad> localidadAux = servicioLocalidad.findById(localidad.getLocaId());
 
-	public void crearAcceso() {
+            if (localidadAux.isPresent()) {
+                localidad = localidadAux.get();
+            }
 
-		/*
-		 * try { acceso.setCredRol((short) 1); accesoServicio.save(acceso);
-		 * 
-		 * mensajeInfo("Registro guardado correctamente"); } catch (Exception e) {
-		 * mensajeError("No s� ha podido guardar:" + e.getMessage());
-		 * 
-		 * } finally {
-		 * 
-		 * listarAcceso();
-		 * 
-		 * acceso = new Credencial();
-		 * 
-		 * }
-		 */
+            persona.setLocaId(localidad);
+            servicioPersona.save(persona);
+            servicioUtileria.mensajeInfo("Registro guardado correctamente");
 
-	}
+        } catch (Exception e) {
+            servicioUtileria.mensajeError("No sé ha podido guardar:" + e.getMessage());
 
-	public void actualizarAcceso() {
+        } finally {
 
-		/*
-		 * try {
-		 * 
-		 * accesoServicio.save(accesoSelect);
-		 * mensajeInfo("Registro actualizado correctamente"); } catch (Exception e) {
-		 * mensajeError("No s� ha podido actualizar:" + e.getMessage());
-		 * 
-		 * } finally { accesoSelect = new Credencial();
-		 * 
-		 * listarAcceso(); }
-		 */
-	}
+            listar();
+            persona = new Persona();
+            localidad = new Localidad();
+        }
 
-	public void actualizar() {
+    }
 
-		/*
-		 * try { contactoSelect.setEmprId(empresa);
-		 * contactoSelect.setCredUsuario(contactoSelect.getContEmail());
-		 * contactoServicio.save(contactoSelect);
-		 * mensajeInfo("Registro actualizado correctamente"); } catch (Exception e) {
-		 * mensajeError("No s� ha podido actualizar:" + e.getMessage());
-		 * 
-		 * } finally { contactoSelect = new Contacto(); empresa = new Empresa();
-		 * listar(); }
-		 */
+    public void crearAdmin() {
 
-	}
 
-	public void leerFila(Credencial acceso) {
-		/* accesoSelect = acceso; */
+        try {
+            acceso.setCredRol(true);
+            servicioCredencial.save(acceso);
 
-	}
+            servicioUtileria.mensajeInfo("Registro guardado correctamente");
+        } catch (Exception e) {
+            servicioUtileria.mensajeError("No sé ha podido guardar:" + e.getMessage());
 
-	public String login() {
-		String redireccion = null;
-		try {
-			List<Credencial> listaCredenciales = servicioCredencial.findByCredCedulaAndCredClave(acceso.getCredCedula(),
-					acceso.getCredClave());
-			Credencial permitido = null;
-			if (!listaCredenciales.isEmpty()) {
-				permitido = listaCredenciales.get(0);
-			}
+        } finally {
+            listarAdmin();
+            acceso = new Credencial();
+        }
 
-			if (permitido != null) {
 
-				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", permitido);
+    }
 
-				if (permitido.isCredRol()) {
-					redireccion = "/admin-ciudad?faces-redirect=true";
 
-				} else {
-					// redireccion = "/formulario?faces-redirect=true";
+    public void actualizar() {
 
-				}
 
-			} else {
-				acceso = new Credencial();
-				// redireccion = "/publico-barrio?faces-redirect=true";
-				servicioUtileria.mensajeError("Credenciales Incorrectas");
-			}
-		} catch (Exception e) {
-			// mensajeError(e.getMessage());
-		}
-		return redireccion;
+        try {
+            personaSelect.setLocaId(localidad);
 
-	}
+            servicioPersona.save(personaSelect);
+            servicioUtileria.mensajeInfo("Registro actualizado correctamente");
+        } catch (Exception e) {
+            servicioUtileria.mensajeError("No sé ha podido actualizar:" + e.getMessage());
+
+        } finally {
+            personaSelect = new Persona();
+            localidad = new Localidad();
+            listar();
+        }
+
+    }
+
+    public void actualizarAdmin() {
+
+
+        try {
+
+            servicioCredencial.save(accesoSelect);
+            servicioUtileria.mensajeInfo("Registro actualizado correctamente");
+        } catch (Exception e) {
+            servicioUtileria.mensajeError("No s� ha podido actualizar:" + e.getMessage());
+
+        } finally {
+            accesoSelect = new Credencial();
+
+            listarAdmin();
+        }
+
+    }
+
+    public void leerFila(Persona persona) {
+        personaSelect = persona;
+        localidad.setLocaId(persona.getLocaId().getLocaId());
+    }
+
+    public void leerFilaAdmin(Credencial credencial) {
+        accesoSelect = credencial;
+
+    }
+
+    public String login() {
+        String redireccion = null;
+        try {
+            List<Credencial> listaCredenciales = servicioCredencial.findByCredCedulaAndCredClave(acceso.getCredCedula(),
+                    acceso.getCredClave());
+            Credencial permitido = null;
+            if (!listaCredenciales.isEmpty()) {
+                permitido = listaCredenciales.get(0);
+            }
+
+            if (permitido != null) {
+
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", permitido);
+
+                if (permitido.isCredRol()) {
+                    redireccion = "/admin-localidad?faces-redirect=true";
+
+                } else {
+                     redireccion = "/cliente-tienda?faces-redirect=true";
+
+                }
+
+            } else {
+                acceso = new Credencial();
+                // redireccion = "/publico-barrio?faces-redirect=true";
+                servicioUtileria.mensajeError("Credenciales Incorrectas");
+            }
+        } catch (Exception e) {
+            servicioUtileria.mensajeError("Error: "+ e.getMessage());
+        }
+        return redireccion;
+
+    }
 
 }

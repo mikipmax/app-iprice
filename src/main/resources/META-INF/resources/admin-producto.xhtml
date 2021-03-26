@@ -11,18 +11,27 @@
             <p:growl id="growlEliminar"/>
 
 
-            <p:fieldset legend="Gestión de Productos">
+            <p:fieldset legend="Gestión de Productos" toggleable="true" toggleSpeed="500">
                 <div align="center">
+                    <p:commandButton value="Nuevo Producto"
+                                     styleClass="btn btn-outline-info btn-sm"
+                                     onclick="PF('dialogoCrear').show();" style="margin-right:20px;"/>
 
                     <p:commandButton value="Ajuste de Precio Automático"
                                      styleClass="btn btn-outline-info btn-sm"
                                      style="margin-right:20px;" onclick="$('#staticBackdrop').modal()"
                                      actionListener="#{productoB.consumirApi}"
-                                     update="iDialogoEditar :formListar:growlEliminar "/>
+                                     update=":formListar:growlEliminar "/>
+                    <p:commandButton value="Actualizar Precios Competencia"
+                                     styleClass="btn btn-outline-info btn-sm"
+                                     style="margin-right:20px;" onclick="$('#staticBackdrop').modal()"
+                                     actionListener="#{productoB.consumirApiWsp}"
+                                     update=":formListar:growlEliminar :formListar:table"/>
                 </div>
+
                 <br/>
                 <p:dataTable var="producto" value="#{productoB.listaProducto}"
-                             id="table" paginator="true" rows="8">
+                             id="table" paginator="true" rows="8" reflow="true" paginatorPosition="bottom">
                     <p:column headerText="Producto">
                         <h:outputText value="#{producto.prodNombre}"/>
                     </p:column>
@@ -35,10 +44,10 @@
                         <h:outputText value="#{producto.prodPrecioOpt}"/>
                     </p:column>
 
-                    <p:column headerText="Precio Competencia 1">
+                    <p:column headerText="Precio AKI">
                         <h:outputText value="#{producto.prodPrecioCo1}"/>
                     </p:column>
-                    <p:column headerText="Precio Competencia 2">
+                    <p:column headerText="Precio TIA">
                         <h:outputText value="#{producto.prodPrecioCo2}"/>
                     </p:column>
                     <p:column headerText="Precio Final">
@@ -46,6 +55,23 @@
                     </p:column>
                     <p:column headerText="Categoría">
                         <h:outputText value="#{producto.caprId.caprNombre}"/>
+                    </p:column>
+                    <p:column headerText="Gestionar Imagen">
+
+                        <p:commandLink update="id-dialogo-agregar-foto"
+                                       actionListener="#{imprB.leerFila(producto)}"
+                                       oncomplete="PF('dialogo-agregar-foto').show();">
+                            <i class="pi pi-camera"/>
+                        </p:commandLink>
+                    </p:column>
+                    <p:column headerText="Ver Imágenes">
+                        <p:commandLink
+                                actionListener="#{imprB.previoListarPorProducto(producto)}"
+                                oncomplete="PF('dialogo-galeria').show();" update="id-dialogo-galeria">
+                            <i class="pi pi-eye"/>
+
+                        </p:commandLink>
+
                     </p:column>
                     <p:column>
                         <b:commandButton value="Editar"
@@ -56,51 +82,72 @@
 
                 </p:dataTable>
                 <br/>
-                <div align="center">
-                    <p:commandButton value="Nuevo Producto"
-                                     styleClass="btn btn-outline-info btn-sm"
-                                     onclick="PF('dialogoCrear').show();" style="margin-right:20px;"/>
 
-                </div>
+
                 <br/>
+
+            </p:fieldset>
+
+        </h:form>
+
+        <h:form id="form-lista-precios">
+            <p:fieldset legend="Gestión de Precios" toggleable="true" toggleSpeed="500">
+                <p:commandButton id="btn-actualizar-precios" value="#{productoB.mensajeSeleccion}"
+                                 icon="pi pi-cloud-upload" actionListener="#{productoB.actualizarPrecioOptimo}"
+                                 styleClass="ui-button-danger"
+                                 disabled="#{!productoB.comprobarProductosSeleccionados()}"
+                                 update=":form-lista-precios:tablePricing formListar:table formListar:growlEliminar"/>
+
 
                 <p:dataTable var="productoPrecio"
                              value="#{productoB.listaPrecioDinamico}" id="tablePricing"
-                             paginator="true" rows="8">
-                    <p:column headerText="Producto">
-                        <h:outputText value="#{productoPrecio.prod_id}"/>
-                    </p:column>
+                             paginator="true" rows="8" rowKey="#{productoPrecio.prod_id}" rowSelectMode="add"
+                             paginatorPosition="bottom" reflow="true" selection="#{productoB.productosSeleccionados}">
 
+                    <p:ajax event="rowSelect" update=":form-lista-precios:btn-actualizar-precios"/>
+                    <p:ajax event="rowUnselect" update=":form-lista-precios:btn-actualizar-precios"/>
+                    <p:ajax event="rowSelectCheckbox" update=":form-lista-precios:btn-actualizar-precios"/>
+                    <p:ajax event="rowUnselectCheckbox" update=":form-lista-precios:btn-actualizar-precios"/>
+                    <p:ajax event="toggleSelect" update=":form-lista-precios:btn-actualizar-precios"/>
+
+                    <p:column selectionMode="multiple" exportable="false"></p:column>
+                    <p:column headerText="Producto">
+                        <h:outputText value="#{productoPrecio.prod_nombre}"/>
+                    </p:column>
+                    <p:column headerText="Precio sin optimizar">
+                        <h:outputText value="#{productoPrecio.prod_precio_norm}"/>
+                    </p:column>
                     <p:column headerText="Precio Optimizado">
                         <h:outputText value="#{productoPrecio.precio_optimizado}"/>
                     </p:column>
-
-
+                    <p:column headerText="Demanda Predicha">
+                        <h:outputText value="#{productoPrecio.demanda_predicha}"/>
+                    </p:column>
+                    <p:column headerText="Ganacia Prevista">
+                        <h:outputText value="#{productoPrecio.ganancia_prevista}"/>
+                    </p:column>
+                    <p:column headerText="Limite del precio mínimo">
+                        <h:outputText value="#{productoPrecio.limite_inferior}"/>
+                    </p:column>
+                    <p:column headerText="Límite del preico máximo">
+                        <h:outputText value="#{productoPrecio.limite_superior}"/>
+                    </p:column>
                 </p:dataTable>
-            </p:fieldset>
 
+            </p:fieldset>
         </h:form>
 
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
              data-bs-keyboard="false" tabindex="-1"
              aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
-
-               <h1>Procesando ... Regrese más tarde</h1>
+                <h1>Procesando ... Regrese más tarde</h1>
                 <div class="modal-body" align="center">
-
-
                     <p:graphicImage name="assets/img/cargando.gif"/>
                 </div>
-
-
             </div>
         </div>
-        <p:dialog widgetVar="statusDialog" modal="true" draggable="false"
-                  closable="true" resizable="false" showHeader="false"
-                  styleClass="statusDialogo" >
-            <p:graphicImage name="assets/img/cargando.gif"/>
-        </p:dialog>
+
 
         <!-- ************************************DIAGOLO EDITAR******************************************* -->
         <p:dialog id="iDialogoEditar" widgetVar="dialogoEditar"
@@ -202,6 +249,66 @@
             </h:form>
         </p:dialog>
 
+        <!-- ************************************DIAGOLO AGREGAR FOTO******************************************* -->
+        <p:dialog id="id-dialogo-agregar-foto" widgetVar="dialogo-agregar-foto"
+                  header="Agregar Imagen" responsive="true" draggable="false"
+                  resizable="false" closeOnEscape="true" position="top"
+                  appendTo="@(body)" modal="true">
+            <h:form enctype="multipart/form-data">
+                <!-- Para soportar varias fotos basta con agregar en el fileUPload multiple=true y es obligarorio un sequential=true para que se suba una a la vez y no de error -->
+                <p:fileUpload label="Seleccione Imagen" id="fu-imagen"
+                              listener="#{imprB.handleFileUpload}" accept="image/*"
+                              allowTypes="/(\.|\/)(gif|jpe?g|png)$/" dragDropSupport="true"
+                              mode="advanced" update=":formListar:growlEliminar fu-imagen"
+                              multiple="false"
+                              fileLimitMessage="Una foto a la vez"
+                              oncomplete="PF('dialogo-agregar-foto').hide();">
+                    <h:outputLabel value="Arrastre su imagen aquí"/>
+                    <hr/>
+                </p:fileUpload>
+                <p:commandButton value="Cerrar"
+                                 onclick="PF('dialogo-agregar-foto').hide();"/>
+            </h:form>
+        </p:dialog>
+
+        <!-- ************************************DIAGOLO GALERIA******************************************* -->
+        <!--onShow="PF('dialogGalery').toggleMaximize();" me permite maximizar el dialog apenas se abra  -->
+        <p:dialog id="id-dialogo-galeria" widgetVar="dialogo-galeria"
+                  header="Galería" responsive="true" draggable="false"
+                  resizable="false" closeOnEscape="true" position="top"
+                  modal="true" hideEffect="clip"
+                  width="980">
+
+
+            <h:form id="form">
+                <p:dataView var="product" value="#{imprB.listaFiltroProducto}" rows="6" paginator="true"
+                            gridIcon="pi pi-th-large" listIcon="pi pi-bars" id="dv-imagen"
+                            layout="grid" gridRowStyleClass="p-lg-6 p-xl-4" flex="true">
+                    <p:dataViewGridItem >
+                        <div align="center">
+
+                            <p:graphicImage value="#{imprB.mostrarFoto()}" cache="false">
+                                <f:param name="pid" value="#{product.imprId}"/>
+                            </p:graphicImage>
+
+
+                            <p:commandButton style="background: crimson; border: 0px"
+                                             icon="pi pi-trash" value="Eliminar"
+                                             oncomplete="PF('dialogo-galeria').hide();"
+                            actionListener="#{imprB.eliminar(product)}" update="id-dialogo-galeria formListar:growlEliminar" >
+                            </p:commandButton>
+
+
+                        </div>
+
+                    </p:dataViewGridItem>
+
+                </p:dataView>
+
+            </h:form>
+
+
+        </p:dialog>
 
     </ui:define>
 

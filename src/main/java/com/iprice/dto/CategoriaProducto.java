@@ -7,9 +7,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity 
 @Data
+@NoArgsConstructor
 public class CategoriaProducto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,5 +19,8 @@ public class CategoriaProducto {
 	private int caprId;
 	@Column(name = "capr_nombre")
 	private String caprNombre;
-	
+
+	public CategoriaProducto(int caprId) {
+		this.caprId = caprId;
+	}
 }

@@ -1,0 +1,127 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+                template="/templates/cliente-template.xhtml">
+    <ui:define name="contenido">
+
+
+        <h:form id="form-listar">
+            <p:growl id="growl"/>
+
+            <p:dataView var="producto" value="#{tiendaB.listaProductos}"
+                        gridIcon="pi pi-th-large" listIcon="pi pi-bars" id="dv-imagen" widgetVar="dvProducto"
+                        layout="grid" gridRowStyleClass="p-lg-6 p-xl-4" flex="true" >
+
+                <f:facet name="header">
+                    <p:outputLabel
+                            value="Bienvenido #{tiendaB.buscarPersonaSesion(tiendaB.sesion.objetoSesion().getCredId())}"
+                            style="margin-right: 2em!important;color: #D4AF37;font-size: x-large"/>
+                    <span class="filter-container ui-input-icon-left">
+                        <p:inputText id="globalFilter" value="#{tiendaB.texto}" placeholder="Nombre del Producto"/>
+                        </span>
+
+                    <p:commandButton actionListener="#{tiendaB.buscador()}" update=":form-listar:dv-imagen"
+                                     value="Buscar" style="margin-right: 3em!important;"/>
+
+                    <p:commandLink style="margin-right: 3em!important;" id="btn-carrito"
+                                   actionListener="#{tiendaB.segmentarCarrito()}"
+                                   oncomplete="PF('dialogo-listar-carrito').show();"
+                                   update="id-dialogo-listar-carrito">
+                        <img src="assets/img/compra.png"/>
+                        <b:badge value="#{tiendaB.listaProductoEnCarrito.size()}"
+                                 id="num-productos-carrito"/>
+                    </p:commandLink>
+
+                    <p:menuButton
+                            styleClass="btn-just-icon btn-white btn-fab btn-round "
+                            icon="pi pi-user-minus">
+                        <p:menuitem value="Cerrar Sesión"
+                                    actionListener="#{SesionValidaB.cerrarSesion}"
+                                    icon="pi pi-sign-out"/>
+                    </p:menuButton>
+
+
+                </f:facet>
+
+                <p:dataViewGridItem columns="4" id="dvg-item">
+
+                    <div align="center">
+
+                        <p:galleria value="#{tiendaB.listarPorProducto(producto)}" var="imagen" panelWidth="200"
+                                    autoPlay="false"
+                                    panelHeight="220" showCaption="true" style="border: 0px!important">
+                            <p:graphicImage value="#{tiendaB.mostrarFoto()}" cache="false"
+                                            title="#{producto.prodNombre}">
+                                <f:param name="pid" value="#{imagen.imprId}"/>
+                            </p:graphicImage>
+                        </p:galleria>
+                        <p:row>
+
+                            <h3><span class="badge rounded-pill bg-primary">$#{producto.prodPrecioNorm}
+
+                                <p:commandButton style="border: 0px!important;" update=":form-listar"
+                                                 actionListener="#{tiendaB.agregarCarrito(producto)}"
+                                                 icon="pi pi-shopping-cart" value="Agregar">
+
+
+                            </p:commandButton>
+                            </span></h3>
+
+
+                        </p:row>
+
+
+                    </div>
+
+                </p:dataViewGridItem>
+
+            </p:dataView>
+
+
+        </h:form>
+
+        <p:dialog id="id-dialogo-listar-carrito" widgetVar="dialogo-listar-carrito"
+                  header="Previsualización de compra" responsive="true" draggable="false"
+                  resizable="false" closeOnEscape="true"
+                  modal="true" position="top">
+            <h:form id="lista-detalle-pedido">
+                <div align="center">
+
+                    <h2>Cliente: #{tiendaB.buscarPersonaSesion(tiendaB.sesion.objetoSesion().getCredId())}</h2>
+                    <h2>Fecha: #{tiendaB.obtenerFechaActual()}</h2>
+                </div>
+                <br/>
+                <p:dataTable var="detalle" value="#{tiendaB.listaDetallePedido}" id="tabla-carrito"
+                             paginator="true" reflow="true"
+                             rows="10" >
+                    <p:column headerText="Producto">
+                        <h:outputText value="#{detalle.prodId.prodNombre}"/>
+                    </p:column>
+                    <p:column headerText="Cantidad">
+                        <h:outputText value="#{detalle.depeCantidad}"/>
+                    </p:column>
+
+                    <p:column headerText="Precio">
+                        <h:outputText value="#{detalle.prodId.prodPrecioNorm}"/>
+                    </p:column>
+
+                </p:dataTable>
+                <br/>
+                <div align="center">
+                    <h1>Total a Pagar: $#{tiendaB.total}</h1>
+                    <br/>
+                    <p:commandButton value="Comprar"
+                                     actionListener="#{tiendaB.generarCompra()}"
+                                     update="id-dialogo-listar-carrito form-listar :lista-detalle-pedido:tabla-carrito"
+                                     oncomplete="PF('dialogo-listar-carrito').hide();"
+                                     styleClass="btn btn-outline-info btn-sm"/>
+                </div>
+            </h:form>
+        </p:dialog>
+
+
+    </ui:define>
+
+</ui:composition>

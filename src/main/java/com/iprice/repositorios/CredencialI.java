@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 import com.iprice.dto.Credencial;
 
 @Repository
-public interface CredencialI  extends CrudRepository<Credencial, Integer>{
-List<Credencial> findByCredCedulaAndCredClave(String cedula, String clave);
+public interface CredencialI extends CrudRepository<Credencial, Integer> {
+    List<Credencial> findByCredCedulaAndCredClave(String cedula, String clave);
+
+    List<Credencial> findByCredRolIsTrue();
 }

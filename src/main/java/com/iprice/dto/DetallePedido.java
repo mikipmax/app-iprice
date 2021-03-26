@@ -20,7 +20,7 @@ public class DetallePedido {
 	@Column(name = "depe_cantidad")
 	private int depeCantidad;
 	@Column(name = "depe_precio")
-	private int depePrecio;
+	private double depePrecio;
 	@JoinColumn(name = "orde_id", referencedColumnName = "orde_id")
 	@ManyToOne
 	private Orden ordeId;

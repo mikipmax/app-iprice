@@ -8,27 +8,25 @@
 
 
         <h:form id="formListar">
-            <p:growl id="growlEliminar"/>
+            <p:growl id="growl"/>
 
 
-            <p:fieldset legend="Gestión de Localidades">
+            <p:fieldset legend="Gestión de Categorías">
                 <div align="center">
-                    <p:commandButton value="Nueva Ciudad"
+                    <p:commandButton value="Nueva Categoría"
                                      styleClass="btn btn-outline-info btn-sm"
                                      onclick="PF('dialogoCrear').show();" style="margin-right:20px;"/>
                 </div>
                 <br/>
-                <p:dataTable var="localidad" value="#{localidadB.listaLocalidad}" id="table" paginator="true" rows="10">
-                    <p:column headerText="Localidad">
-                        <h:outputText value="#{localidad.locaNombre}"/>
+                <p:dataTable var="categoria" value="#{caprB.listaCategoriaProducto}" id="table" paginator="true" rows="10" reflow="true">
+                    <p:column headerText="Categoria">
+                        <h:outputText value="#{categoria.caprNombre}"/>
                     </p:column>
 
-                    <p:column headerText="Porcentaje Descuento">
-                        <h:outputText value="#{localidad.locaPorcDesc}"/>
-                    </p:column>
+
                     <p:column>
                         <b:commandButton value="Editar"
-                                         actionListener="#{localidadB.leerFila(localidad)}" icon="pencil"
+                                         actionListener="#{caprB.leerFila(categoria)}" icon="pencil"
                                          oncomplete="PF('dialogoEditar').show();" update="iDialogoEditar"
                                          styleClass="btn btn-outline-info btn-sm" icon-size="2x"/>
                     </p:column>
@@ -42,24 +40,22 @@
 
         <!-- ************************************DIAGOLO EDITAR******************************************* -->
         <p:dialog id="iDialogoEditar" widgetVar="dialogoEditar"
-                  header="Editar Localidad" responsive="true" draggable="false"
+                  header="Editar Categorías" responsive="true" draggable="false"
                   resizable="false" closeOnEscape="true" appendTo="@(body)"
                   modal="true" position="top">
             <h:form>
 
                 <p:panelGrid id="pgEditar" columns="2">
-                    <h:outputLabel for="txtNombre" value="Nombre Localidad *"/>
+                    <h:outputLabel for="txtNombre" value="Categoría *"/>
                     <p:inputText id="txtNombre" required="true"
-                                 value="#{localidadB.localidadSelect.locaNombre}"
+                                 value="#{caprB.categoriaProductoSelect.caprNombre}"
                                  onclick="this.setSelectionRange(0, this.value.length)"/>
-                    <h:outputLabel for="txtPorcDesc" value="Porcentaje Descuento *"/>
-                    <p:inputText id="txtPorcDesc" required="true"
-                                 value="#{localidadB.localidadSelect.locaPorcDesc}"
-                                 onclick="this.setSelectionRange(0, this.value.length)"/>
+
+
                     <p:commandButton value="Guardar cambios"
-                                     actionListener="#{localidadB.actualizar}"
+                                     actionListener="#{caprB.actualizar}"
                                      styleClass="btn btn-outline-info btn-sm"
-                                     update=":formListar:table :formListar:growlEliminar"
+                                     update=":formListar:table :formListar:growl"
                                      oncomplete="PF('dialogoEditar').hide();"/>
                 </p:panelGrid>
             </h:form>
@@ -67,20 +63,18 @@
 
         <!-- ************************************DIAGOLO CREAR******************************************** -->
         <p:dialog id="iDialogoCrear" widgetVar="dialogoCrear"
-                  header="Crear Ciudad" responsive="true" draggable="false"
+                  header="Crear Categoría" responsive="true" draggable="false"
                   resizable="false" closeOnEscape="true" appendTo="@(body)"
                   modal="true" position="top">
             <h:form>
 
                 <p:panelGrid id="pgCrear" columns="2">
-                    <h:outputLabel for="txtNombre" value="Nombre Localidad *"/>
+                    <h:outputLabel for="txtNombre" value="Categoría *"/>
                     <p:inputText id="txtNombre" required="true"
-                                 value="#{localidadB.localidad.locaNombre}"/>
-                    <h:outputLabel for="txtPorcDesc" value="Porcentaje Descuento *"/>
-                    <p:inputText id="txtPorcDesc" required="true"
-                                 value="#{localidadB.localidad.locaPorcDesc}" type="number"/>
-                    <p:commandButton value="Guardar" actionListener="#{localidadB.crear}"
-                                     update="iDialogoCrear :formListar:table :formListar:growlEliminar"
+                                 value="#{caprB.categoriaProducto.caprNombre}"/>
+
+                    <p:commandButton value="Guardar" actionListener="#{caprB.crear}"
+                                     update="iDialogoCrear :formListar:table :formListar:growl"
                                      oncomplete="PF('dialogoCrear').hide();"
                                      styleClass="btn btn-outline-info btn-sm"/>
                 </p:panelGrid>

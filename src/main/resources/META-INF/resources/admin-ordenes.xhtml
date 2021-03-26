@@ -1,0 +1,63 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+                template="/templates/admin-template.xhtml">
+    <ui:define name="contenido">
+
+
+        <h:form id="formListar">
+            <p:growl id="growl"/>
+
+
+            <p:fieldset legend="Reporte Órdenes">
+
+                <br/>
+
+                <h:form>
+                    <p:dataTable var="detalles" value="#{ordenB.listaDepe}" sortBy="#{detalles.prodId.prodNombre}"
+                                 expandableRowGroups="true" paginator="true" rows="10" reflow="true">
+
+                        <p:headerRow>
+                            <p:column colspan="5">
+                                <h:outputText value="#{detalles.prodId.prodNombre}"/>
+                            </p:column>
+                        </p:headerRow>
+
+
+                        <p:column headerText="Fecha">
+                            <h:outputText value="#{detalles.ordeId.ordeFecha}">
+                                <f:convertDateTime pattern="dd-MM-yyyy" type="localDate"/>
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="Cliente">
+                            <h:outputText
+                                    value="#{detalles.ordeId.clienteId.persNombre} #{detalles.ordeId.clienteId.persApellido}"/>
+                        </p:column>
+                        <p:column headerText="Producto">
+                            <h:outputText value="#{detalles.prodId.prodNombre}"/>
+                        </p:column>
+
+                        <p:column headerText="Cantidad">
+                            <h:outputText value="#{detalles.depeCantidad}"/>
+                        </p:column>
+                        <p:column headerText="Precio">
+                            <h:outputText value="#{detalles.depePrecio}"/>
+                        </p:column>
+
+
+
+                    </p:dataTable>
+                </h:form>
+
+
+            </p:fieldset>
+
+        </h:form>
+
+
+    </ui:define>
+
+</ui:composition>

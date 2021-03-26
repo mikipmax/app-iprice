@@ -8,10 +8,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Producto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,8 +34,9 @@ public class Producto {
 	private double prodPrecioCo1;
 	@Column(name = "prod_precio_co_2")
 	private double prodPrecioCo2;
-	@Column(name = "prod_precio_ini")
-	private double prodPrecioIni;
+
 	@Column(name = "prod_precio_fin")
 	private double prodPrecioFin;
+
+
 }

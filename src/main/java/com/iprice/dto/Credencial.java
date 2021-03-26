@@ -34,4 +34,8 @@ public class Credencial  {
 	public Credencial(boolean credRol) {
 		this.credRol = credRol;
 	}
+
+	public Credencial(int credId) {
+		this.credId = credId;
+	}
 }

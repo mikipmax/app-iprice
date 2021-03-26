@@ -13,12 +13,12 @@
 
             <p:fieldset legend="Gestión de Localidades">
                 <div align="center">
-                    <p:commandButton value="Nueva Ciudad"
+                    <p:commandButton value="Nueva Localidad"
                                      styleClass="btn btn-outline-info btn-sm"
                                      onclick="PF('dialogoCrear').show();" style="margin-right:20px;"/>
                 </div>
                 <br/>
-                <p:dataTable var="localidad" value="#{localidadB.listaLocalidad}" id="table" paginator="true" rows="10">
+                <p:dataTable var="localidad" value="#{localidadB.listaLocalidad}" id="table" paginator="true" rows="10" reflow="true">
                     <p:column headerText="Localidad">
                         <h:outputText value="#{localidad.locaNombre}"/>
                     </p:column>
@@ -67,7 +67,7 @@
 
         <!-- ************************************DIAGOLO CREAR******************************************** -->
         <p:dialog id="iDialogoCrear" widgetVar="dialogoCrear"
-                  header="Crear Ciudad" responsive="true" draggable="false"
+                  header="Crear Localidad" responsive="true" draggable="false"
                   resizable="false" closeOnEscape="true" appendTo="@(body)"
                   modal="true" position="top">
             <h:form>

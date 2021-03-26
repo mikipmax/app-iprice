@@ -15,6 +15,7 @@ configurations {
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
@@ -29,5 +30,10 @@ dependencies {
     compile group: 'org.joinfaces', name: 'bootsfaces-spring-boot-starter'
     implementation group: 'org.joinfaces', name: 'primefaces-spring-boot-starter'
 
+    compile group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
+    compile group: 'commons-io', name: 'commons-io', version: '2.7'
+
+    compile group: 'org.imgscalr', name: 'imgscalr-lib', version: '4.2'
+    implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
 
 }

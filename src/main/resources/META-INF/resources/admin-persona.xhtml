@@ -1,0 +1,254 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+                template="/templates/admin-template.xhtml">
+    <ui:define name="contenido">
+
+
+        <h:form id="formListar">
+            <p:growl id="growl"/>
+
+
+            <p:fieldset legend="Gestión de Clientes" toggleable="true" toggleSpeed="500">
+                <div align="center">
+                    <p:commandButton value="Nuevo Cliente"
+                                     styleClass="btn btn-outline-info btn-sm"
+                                     onclick="PF('dialogoRegistrar').show();" style="margin-right:20px;"/>
+                </div>
+                <br/>
+                <p:dataTable var="cliente" value="#{CredencialB.listaCliente}" styleClass="products-table" id="table"
+                             paginator="true" rows="10" reflow="true">
+
+
+                    <p:column headerText="Cédula">
+                        <h:outputText value="#{cliente.credCedula}"/>
+                    </p:column>
+                    <p:column headerText="Nombres">
+                        <h:outputText value="#{cliente.persNombre}"/>
+                    </p:column>
+                    <p:column headerText="Apellidos">
+                        <h:outputText value="#{cliente.persApellido}"/>
+                    </p:column>
+                    <p:column headerText="Dirección">
+                        <h:outputText value="#{cliente.persDireccion}"/>
+                    </p:column>
+                    <p:column headerText="Email">
+                        <h:outputText value="#{cliente.persEmail}"/>
+                    </p:column>
+                    <p:column headerText="Teléfono">
+                        <h:outputText value="#{cliente.persTelefono}"/>
+                    </p:column>
+                    <p:column headerText="Localidad">
+                        <h:outputText value="#{cliente.locaId.locaNombre}"/>
+                    </p:column>
+                    <p:column>
+                        <b:commandButton value="Editar"
+                                         actionListener="#{CredencialB.leerFila(cliente)}" icon="pencil"
+                                         oncomplete="PF('dialogoEditar').show();" update="iDialogoEditar"
+                                         styleClass="btn btn-outline-info btn-sm" icon-size="2x"/>
+                    </p:column>
+
+                </p:dataTable>
+
+
+            </p:fieldset>
+
+            <p:fieldset legend="Gestión de Administradores" toggleable="true" toggleSpeed="500">
+                <div align="center">
+                    <p:commandButton value="Nuevo Administrador"
+                                     styleClass="btn btn-outline-info btn-sm"
+                                     onclick="PF('dialogo-crear-admin').show();" style="margin-right:20px;"/>
+                </div>
+                <br/>
+                <p:dataTable var="admin" value="#{CredencialB.listaCredencial}" styleClass="products-table"
+                             id="tabla-admin" reflow="true"
+                             paginator="true" rows="10">
+
+
+                    <p:column headerText="Cédula">
+                        <h:outputText value="#{admin.credCedula}"/>
+                    </p:column>
+
+                    <p:column>
+                        <b:commandButton value="Editar"
+                                         actionListener="#{CredencialB.leerFilaAdmin(admin)}" icon="pencil"
+                                         oncomplete="PF('dialogo-editar').show();" update="id-dialog-editar"
+                                         styleClass="btn btn-outline-info btn-sm" icon-size="2x"/>
+                    </p:column>
+
+                </p:dataTable>
+
+            </p:fieldset>
+        </h:form>
+
+        <!-- ************************************DIAGOLO EDITAR******************************************* -->
+        <p:dialog id="iDialogoEditar" widgetVar="dialogoEditar"
+                  header="Editar Cliente" responsive="true" draggable="false"
+                  resizable="false" closeOnEscape="true" appendTo="@(body)"
+                  modal="true" position="top">
+            <h:form>
+
+                <p:panelGrid id="pgEditar" columns="2">
+
+                    <h:outputLabel for="txtCedula" value="Cédula/usuario *"/>
+                    <p:inputText id="txtCedula" required="true"
+                                 value="#{CredencialB.personaSelect.credCedula}"
+                                 onclick="this.setSelectionRange(0, this.value.length)"/>
+                    <h:outputLabel for="txtClave" value="Clave *"/>
+                    <p:inputText id="txtClave" required="true" type="password"
+                                 value="#{CredencialB.personaSelect.credClave}"
+                                 onclick="this.setSelectionRange(0, this.value.length)"/>
+                    <h:outputLabel for="txtNombre" value="Nombre *"/>
+                    <p:inputText id="txtNombre" required="true"
+                                 value="#{CredencialB.personaSelect.persNombre}"
+                                 onclick="this.setSelectionRange(0, this.value.length)"/>
+                    <h:outputLabel for="txtApellido" value="Apellido *"/>
+                    <p:inputText id="txtApellido" required="true"
+                                 value="#{CredencialB.personaSelect.persApellido}"
+                                 onclick="this.setSelectionRange(0, this.value.length)"/>
+                    <h:outputLabel for="txtTelefono" value="Teléfono/Celular *"/>
+                    <p:inputText id="txtTelefono" required="true"
+                                 value="#{CredencialB.personaSelect.persTelefono}"
+                                 onclick="this.setSelectionRange(0, this.value.length)"/>
+                    <h:outputLabel for="txtDireccion" value="Dirección *"/>
+                    <p:inputText id="txtDireccion" required="true"
+                                 value="#{CredencialB.personaSelect.persDireccion}"
+                                 onclick="this.setSelectionRange(0, this.value.length)"/>
+                    <h:outputLabel for="txtEmail" value="Email *"/>
+                    <p:inputText id="txtEmail" required="true"
+                                 value="#{CredencialB.personaSelect.persEmail}"
+                                 onclick="this.setSelectionRange(0, this.value.length)"/>
+                    <h:outputLabel for="ciudad" value="Seleccione Localidad"/>
+                    <p:selectOneMenu id="ciudad" value="#{CredencialB.localidad.locaId}"
+                                     required="true">
+                        <f:selectItems value="#{CredencialB.listaLocalidad}" var="localidad"
+                                       itemLabel="#{localidad.locaNombre}" itemValue="#{localidad.locaId}"/>
+                    </p:selectOneMenu>
+
+                    <p:commandButton value="Cancelar"
+                                     oncomplete="PF('dialogoRegistrar').hide();"/>
+                    <p:commandButton value="Guardar cambios"
+                                     actionListener="#{CredencialB.actualizar}"
+                                     styleClass="btn btn-outline-info btn-sm"
+                                     update=":formListar:table :formListar:growl"
+                                     oncomplete="PF('dialogoEditar').hide();"/>
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
+
+        <!-- ************************************DIAGOLO CREAR******************************************** -->
+
+        <p:dialog id="iDialogoRegistrar" widgetVar="dialogoRegistrar"
+                  header="Registro de Usuario" responsive="true" draggable="false"
+                  resizable="false" closeOnEscape="true" appendTo="@(body)" modal="true"
+                  position="top">
+
+
+            <h:form id="formRegistro">
+
+                <p:panelGrid columns="2">
+                    <h:outputLabel for="txtCedula" value="Cédula/usuario *"/>
+                    <p:inputText id="txtCedula" required="true"
+                                 value="#{CredencialB.persona.credCedula}"
+                                 onclick="this.setSelectionRange(0, this.value.length)"/>
+                    <h:outputLabel for="txtClave" value="Clave *"/>
+                    <p:inputText id="txtClave" required="true" type="password"
+                                 value="#{CredencialB.persona.credClave}"
+                                 onclick="this.setSelectionRange(0, this.value.length)"/>
+                    <h:outputLabel for="txtNombre" value="Nombre *"/>
+                    <p:inputText id="txtNombre" required="true"
+                                 value="#{CredencialB.persona.persNombre}"
+                                 onclick="this.setSelectionRange(0, this.value.length)"/>
+                    <h:outputLabel for="txtApellido" value="Apellido *"/>
+                    <p:inputText id="txtApellido" required="true"
+                                 value="#{CredencialB.persona.persApellido}"
+                                 onclick="this.setSelectionRange(0, this.value.length)"/>
+                    <h:outputLabel for="txtTelefono" value="Teléfono/Celular *"/>
+                    <p:inputText id="txtTelefono" required="true"
+                                 value="#{CredencialB.persona.persTelefono}"
+                                 onclick="this.setSelectionRange(0, this.value.length)"/>
+                    <h:outputLabel for="txtDireccion" value="Dirección *"/>
+                    <p:inputText id="txtDireccion" required="true"
+                                 value="#{CredencialB.persona.persDireccion}"
+                                 onclick="this.setSelectionRange(0, this.value.length)"/>
+                    <h:outputLabel for="txtEmail" value="Email *"/>
+                    <p:inputText id="txtEmail" required="true"
+                                 value="#{CredencialB.persona.persEmail}"
+                                 onclick="this.setSelectionRange(0, this.value.length)"/>
+                    <h:outputLabel for="ciudad" value="Seleccione Localidad"/>
+                    <p:selectOneMenu id="ciudad" value="#{CredencialB.localidad.locaId}"
+                                     required="true">
+                        <f:selectItems value="#{CredencialB.listaLocalidad}" var="localidad"
+                                       itemLabel="#{localidad.locaNombre}" itemValue="#{localidad.locaId}"/>
+                    </p:selectOneMenu>
+
+                    <p:commandButton value="Cancelar"
+                                     oncomplete="PF('dialogoRegistrar').hide();"/>
+
+                    <p:commandButton value="Registrarse"
+                                     actionListener="#{CredencialB.registrarNuevoUsuario}"
+                                     update="formRegistro formListar:growl"
+                                     oncomplete="PF('dialogoRegistrar').hide();"/>
+                    <p:column/>
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
+        <!--*************************************************DIALOGO EDITAR ADMIN*************************************************-->
+        <p:dialog id="id-dialog-editar" widgetVar="dialogo-editar"
+                  header="Editar Administrador" responsive="true" draggable="false"
+                  resizable="false" closeOnEscape="true" appendTo="@(body)"
+                  modal="true" position="top">
+            <h:form>
+
+                <p:panelGrid id="pgEditar" columns="2">
+
+                    <h:outputLabel for="txtCedula" value="Cédula"/>
+                    <p:inputText id="txtCedula" disabled="true"
+                                 value="#{CredencialB.accesoSelect.credCedula}"
+                                 onclick="this.setSelectionRange(0, this.value.length)"/>
+                    <h:outputLabel for="txtClave" value="Clave *"/>
+                    <p:inputText id="txtClave" required="true" type="password"
+                                 value="#{CredencialB.accesoSelect.credClave}"
+                                 onclick="this.setSelectionRange(0, this.value.length)"/>
+
+                    <p:commandButton value="Guardar cambios"
+                                     actionListener="#{CredencialB.actualizarAdmin}"
+                                     styleClass="btn btn-outline-info btn-sm"
+                                     update=":formListar:tabla-admin :formListar:growl"
+                                     oncomplete="PF('dialogo-editar').hide();"/>
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
+
+        <!--*********************************************DIALOGO CREAR ADMIN*************************************************************-->
+        <p:dialog id="id-dialogo-crear-admin" widgetVar="dialogo-crear-admin"
+                  header="Crear Administrador" responsive="true" draggable="false"
+                  resizable="false" closeOnEscape="true" appendTo="@(body)"
+                  modal="true" position="top">
+            <h:form>
+
+                <p:panelGrid columns="2">
+
+                    <h:outputLabel for="txtCedula" value="Cédula *"/>
+                    <p:inputText id="txtCedula"
+                                 value="#{CredencialB.acceso.credCedula}"
+                                 onclick="this.setSelectionRange(0, this.value.length)"/>
+                    <h:outputLabel for="txtClave" value="Clave *"/>
+                    <p:inputText id="txtClave" required="true" type="password"
+                                 value="#{CredencialB.acceso.credClave}"
+                                 onclick="this.setSelectionRange(0, this.value.length)"/>
+
+                    <p:commandButton value="Guardar cambios"
+                                     actionListener="#{CredencialB.crearAdmin}"
+                                     styleClass="btn btn-outline-info btn-sm"
+                                     update=":formListar:tabla-admin :formListar:growl"
+                                     oncomplete="PF('dialogo-crear-admin').hide();"/>
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
+
+    </ui:define>
+
+</ui:composition>
