@@ -59,7 +59,7 @@
                         </p:galleria>
                         <p:row>
 
-                            <h3><span class="badge rounded-pill bg-primary">$#{producto.prodPrecioNorm}
+                            <h3><span class="badge rounded-pill bg-primary">$#{producto.prodPrecioFin}
 
                                 <p:commandButton style="border: 0px!important;" update=":form-listar"
                                                  actionListener="#{tiendaB.agregarCarrito(producto)}"
@@ -104,7 +104,7 @@
                     </p:column>
 
                     <p:column headerText="Precio">
-                        <h:outputText value="#{detalle.prodId.prodPrecioNorm}"/>
+                        <h:outputText value="#{detalle.prodId.prodPrecioFin}"/>
                     </p:column>
 
                 </p:dataTable>

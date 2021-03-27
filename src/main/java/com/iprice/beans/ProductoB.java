@@ -128,8 +128,8 @@ public class ProductoB implements Serializable {
         PrimeFaces.current().executeScript("$('#staticBackdrop').modal('hide')");
     }
 
-    public void consumirApiWsp(){
-        restTemplate.getForObject("http://localhost:5000/wsp",String.class);
+    public void consumirApiWsp() {
+        restTemplate.getForObject("http://localhost:5000/wsp", String.class);
         utileriaServicio.mensajeInfo("Precios de la competencia actualizados");
         PrimeFaces.current().executeScript("$('#staticBackdrop').modal('hide')");
         listar();
@@ -154,8 +154,9 @@ public class ProductoB implements Serializable {
         for (PrecioDinamico s : productosSeleccionados) {
             Producto productoTemp = new Producto(s.getProd_id(),
                     s.getProd_nombre(), new CategoriaProducto(s.getCapr_id()),
-                    s.getPrecio_optimizado(), s.getProd_precio_norm(),
-                    s.getProd_precio_co_1(), s.getProd_precio_co_2(), s.getProd_precio_fin());
+                    s.getPrecio_optimizado(),
+                    utileriaServicio.redondearDecimales(s.getPrecio_optimizado() * 1.10, 2),
+                    s.getProd_precio_co_1(), s.getProd_precio_co_2(), s.getPrecio_optimizado());
             productoServicio.save(productoTemp);
             listaPrecioDinamico.remove(s);
         }

@@ -163,12 +163,12 @@ public class TiendaB implements Serializable {
             depe.setProdId(producto);
             Orden o = new Orden();
             depe.setOrdeId(o);
-            depe.setDepePrecio(producto.getProdPrecioNorm());
+            depe.setDepePrecio(producto.getProdPrecioFin());
             listaDetallePedido.add(depe);
         }
         total = 0;
         for (DetallePedido depeAux : listaDetallePedido) {
-            total += (depeAux.getDepeCantidad()) * depeAux.getProdId().getProdPrecioNorm();
+            total += (depeAux.getDepeCantidad()) * depeAux.getProdId().getProdPrecioFin();
             total=utileriaServicio.redondearDecimales(total,2);
         }
 

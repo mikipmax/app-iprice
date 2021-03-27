@@ -40,9 +40,7 @@
                     <p:column headerText="Teléfono">
                         <h:outputText value="#{cliente.persTelefono}"/>
                     </p:column>
-                    <p:column headerText="Localidad">
-                        <h:outputText value="#{cliente.locaId.locaNombre}"/>
-                    </p:column>
+
                     <p:column>
                         <b:commandButton value="Editar"
                                          actionListener="#{CredencialB.leerFila(cliente)}" icon="pencil"
@@ -120,12 +118,6 @@
                     <p:inputText id="txtEmail" required="true"
                                  value="#{CredencialB.personaSelect.persEmail}"
                                  onclick="this.setSelectionRange(0, this.value.length)"/>
-                    <h:outputLabel for="ciudad" value="Seleccione Localidad"/>
-                    <p:selectOneMenu id="ciudad" value="#{CredencialB.localidad.locaId}"
-                                     required="true">
-                        <f:selectItems value="#{CredencialB.listaLocalidad}" var="localidad"
-                                       itemLabel="#{localidad.locaNombre}" itemValue="#{localidad.locaId}"/>
-                    </p:selectOneMenu>
 
                     <p:commandButton value="Cancelar"
                                      oncomplete="PF('dialogoRegistrar').hide();"/>
@@ -177,12 +169,6 @@
                     <p:inputText id="txtEmail" required="true"
                                  value="#{CredencialB.persona.persEmail}"
                                  onclick="this.setSelectionRange(0, this.value.length)"/>
-                    <h:outputLabel for="ciudad" value="Seleccione Localidad"/>
-                    <p:selectOneMenu id="ciudad" value="#{CredencialB.localidad.locaId}"
-                                     required="true">
-                        <f:selectItems value="#{CredencialB.listaLocalidad}" var="localidad"
-                                       itemLabel="#{localidad.locaNombre}" itemValue="#{localidad.locaId}"/>
-                    </p:selectOneMenu>
 
                     <p:commandButton value="Cancelar"
                                      oncomplete="PF('dialogoRegistrar').hide();"/>

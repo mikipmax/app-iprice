@@ -1,24 +1,19 @@
 package com.iprice.beans;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 
-import com.iprice.dto.CategoriaProducto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
-import com.iprice.dto.Localidad;
 import com.iprice.dto.Credencial;
 import com.iprice.dto.Persona;
-import com.iprice.repositorios.LocalidadI;
 import com.iprice.repositorios.CredencialI;
 import com.iprice.repositorios.PersonaI;
 import com.iprice.utils.UtileriaI;
@@ -37,8 +32,7 @@ public class CredencialB implements Serializable {
     private Credencial accesoSelect;
     private Persona persona;
     private Persona personaSelect;
-    private Localidad localidad;
-    private List<Localidad> listaLocalidad;
+
     private List<Persona> listaCliente;
     private List<Credencial> listaCredencial;
 
@@ -46,8 +40,7 @@ public class CredencialB implements Serializable {
     private CredencialI servicioCredencial;
     @Autowired
     private PersonaI servicioPersona;
-    @Autowired
-    private LocalidadI servicioLocalidad;
+
     @Autowired
     private UtileriaI servicioUtileria;
 
@@ -59,8 +52,7 @@ public class CredencialB implements Serializable {
         accesoSelect = new Credencial();
         persona = new Persona();
         personaSelect = new Persona();
-        localidad = new Localidad();
-        listaLocalidad = (List<Localidad>) servicioLocalidad.findAll();
+
         listar();
         listarAdmin();
     }
@@ -90,13 +82,7 @@ public class CredencialB implements Serializable {
     public void registrarNuevoUsuario() {
 
         try {
-            Optional<Localidad> localidadAux = servicioLocalidad.findById(localidad.getLocaId());
 
-            if (localidadAux.isPresent()) {
-                localidad = localidadAux.get();
-            }
-
-            persona.setLocaId(localidad);
             servicioPersona.save(persona);
             servicioUtileria.mensajeInfo("Registro guardado correctamente");
 
@@ -107,7 +93,7 @@ public class CredencialB implements Serializable {
 
             listar();
             persona = new Persona();
-            localidad = new Localidad();
+
         }
 
     }
@@ -136,7 +122,7 @@ public class CredencialB implements Serializable {
 
 
         try {
-            personaSelect.setLocaId(localidad);
+
 
             servicioPersona.save(personaSelect);
             servicioUtileria.mensajeInfo("Registro actualizado correctamente");
@@ -145,7 +131,7 @@ public class CredencialB implements Serializable {
 
         } finally {
             personaSelect = new Persona();
-            localidad = new Localidad();
+
             listar();
         }
 
@@ -171,7 +157,7 @@ public class CredencialB implements Serializable {
 
     public void leerFila(Persona persona) {
         personaSelect = persona;
-        localidad.setLocaId(persona.getLocaId().getLocaId());
+
     }
 
     public void leerFilaAdmin(Credencial credencial) {
@@ -194,7 +180,7 @@ public class CredencialB implements Serializable {
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", permitido);
 
                 if (permitido.isCredRol()) {
-                    redireccion = "/admin-localidad?faces-redirect=true";
+                    redireccion = "/admin-persona?faces-redirect=true";
 
                 } else {
                      redireccion = "/cliente-tienda?faces-redirect=true";

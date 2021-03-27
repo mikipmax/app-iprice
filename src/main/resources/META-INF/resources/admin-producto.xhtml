@@ -115,10 +115,10 @@
                         <h:outputText value="#{productoPrecio.prod_nombre}"/>
                     </p:column>
                     <p:column headerText="Precio sin optimizar">
-                        <h:outputText value="#{productoPrecio.prod_precio_norm}"/>
+                        <h:outputText value="#{productoPrecio.prod_precio_fin}"/>
                     </p:column>
                     <p:column headerText="Precio Optimizado">
-                        <h:outputText value="#{productoPrecio.precio_optimizado}"/>
+                        <h:outputText value="#{productoPrecio.precio_optimizado}" style="color: goldenrod"/>
                     </p:column>
                     <p:column headerText="Demanda Predicha">
                         <h:outputText value="#{productoPrecio.demanda_predicha}"/>
@@ -126,10 +126,17 @@
                     <p:column headerText="Ganacia Prevista">
                         <h:outputText value="#{productoPrecio.ganancia_prevista}"/>
                     </p:column>
+
+                    <p:column headerText="Precio competencia AKI ">
+                        <h:outputText value="#{productoPrecio.prod_precio_co_1}"/>
+                    </p:column>
+                    <p:column headerText="Precio competencia TIA">
+                        <h:outputText value="#{productoPrecio.prod_precio_co_1}"/>
+                    </p:column>
                     <p:column headerText="Limite del precio mínimo">
                         <h:outputText value="#{productoPrecio.limite_inferior}"/>
                     </p:column>
-                    <p:column headerText="Límite del preico máximo">
+                    <p:column headerText="Límite del precio máximo">
                         <h:outputText value="#{productoPrecio.limite_superior}"/>
                     </p:column>
                 </p:dataTable>
@@ -284,7 +291,7 @@
                 <p:dataView var="product" value="#{imprB.listaFiltroProducto}" rows="6" paginator="true"
                             gridIcon="pi pi-th-large" listIcon="pi pi-bars" id="dv-imagen"
                             layout="grid" gridRowStyleClass="p-lg-6 p-xl-4" flex="true">
-                    <p:dataViewGridItem >
+                    <p:dataViewGridItem>
                         <div align="center">
 
                             <p:graphicImage value="#{imprB.mostrarFoto()}" cache="false">
@@ -295,7 +302,8 @@
                             <p:commandButton style="background: crimson; border: 0px"
                                              icon="pi pi-trash" value="Eliminar"
                                              oncomplete="PF('dialogo-galeria').hide();"
-                            actionListener="#{imprB.eliminar(product)}" update="id-dialogo-galeria formListar:growlEliminar" >
+                                             actionListener="#{imprB.eliminar(product)}"
+                                             update="id-dialogo-galeria formListar:growlEliminar">
                             </p:commandButton>
 
 

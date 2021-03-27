@@ -2,8 +2,6 @@ package com.iprice.dto;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,9 +26,7 @@ public class Persona extends Credencial {
 	private String persTelefono;
 	@Column(name = "pers_email")
 	private String persEmail;
-	@JoinColumn(name = "loca_id", referencedColumnName = "loca_id")
-	@ManyToOne
-	private Localidad locaId;
+
 
 	public Persona(int credId) {
 		super(credId);
