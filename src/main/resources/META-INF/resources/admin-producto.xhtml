@@ -131,7 +131,7 @@
                         <h:outputText value="#{productoPrecio.prod_precio_co_1}"/>
                     </p:column>
                     <p:column headerText="Precio competencia TIA">
-                        <h:outputText value="#{productoPrecio.prod_precio_co_1}"/>
+                        <h:outputText value="#{productoPrecio.prod_precio_co_2}"/>
                     </p:column>
                     <p:column headerText="Limite del precio mínimo">
                         <h:outputText value="#{productoPrecio.limite_inferior}"/>
@@ -172,11 +172,7 @@
                     <p:inputText id="txtPrecioNormal" required="true"
                                  value="#{productoB.productoSelect.prodPrecioNorm}"
                                  onclick="this.setSelectionRange(0, this.value.length)"/>
-                    <h:outputLabel for="txtPrecioOptimizado"
-                                   value="Precio Optimizado *"/>
-                    <p:inputText id="txtPrecioOptimizado" required="true"
-                                 value="#{productoB.productoSelect.prodPrecioOpt}"
-                                 onclick="this.setSelectionRange(0, this.value.length)"/>
+
                     <h:outputLabel for="txtPrecioCo1" value="Precio Competencía 1 *"/>
                     <p:inputText id="txtPrecioCo1" required="true"
                                  value="#{productoB.productoSelect.prodPrecioCo1}"
@@ -208,7 +204,7 @@
 
         <!-- ************************************DIAGOLO CREAR******************************************** -->
         <p:dialog id="iDialogoCrear" widgetVar="dialogoCrear"
-                  header="Crear Ciudad" responsive="true" draggable="false"
+                  header="Crear Producto" responsive="true" draggable="false"
                   resizable="false" closeOnEscape="true" appendTo="@(body)"
                   modal="true" position="top">
             <h:form>
@@ -222,11 +218,7 @@
                     <p:inputText id="txtPrecioNormal" required="true"
                                  value="#{productoB.producto.prodPrecioNorm}"
                                  onclick="this.setSelectionRange(0, this.value.length)"/>
-                    <h:outputLabel for="txtPrecioOptimizado"
-                                   value="Precio Optimizado *"/>
-                    <p:inputText id="txtPrecioOptimizado" required="true"
-                                 value="#{productoB.producto.prodPrecioOpt}"
-                                 onclick="this.setSelectionRange(0, this.value.length)"/>
+
                     <h:outputLabel for="txtPrecioCo1" value="Precio Competencía 1 *"/>
                     <p:inputText id="txtPrecioCo1" required="true"
                                  value="#{productoB.producto.prodPrecioCo1}"

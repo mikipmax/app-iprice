@@ -14,7 +14,7 @@ public class PrecioDinamico {
 	private double limite_superior;
 	private double precio_optimizado;
 	private int demanda_predicha;
-	private int ganancia_prevista;
+	private double ganancia_prevista;
 	private double prod_precio_norm;
 	private double prod_precio_fin;
 }

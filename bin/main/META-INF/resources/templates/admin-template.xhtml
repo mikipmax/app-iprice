@@ -1,215 +1,146 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
 
 <h:head>
-	
-	<meta content='text/html; charset=UTF-8' http-equiv="Content-Type" />
-	<link rel="apple-touch-icon" sizes="76x76"
-		href="../assets/img/apple-icon.png" />
-	<link rel="icon" type="image/png" href="../assets/img/favicon.png" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	<title>Panel Administrador</title>
-	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no'
-		name='viewport' />
-	<!--     Fonts and icons     -->
-	<link rel="stylesheet" type="text/css"
-		href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
-	<link rel="stylesheet"
-		href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
-	<!-- CSS Files -->
-	<!--<link rel="stylesheet"
-		href="${request.contextPath}/assets/css/material-dashboard.css?v=2.1.2" />  -->
-	<!-- CSS Just for demo purpose, don't include it in your project -->
-	<link rel="stylesheet"
-		href="https://cdn.jsdelivr.net/npm/material-dashboard@2.1.0/assets/css/material-dashboard.css" />
+    <f:event type="preRenderView"
+             listener="#{SesionValidaB.verificarSesionAdmin}"/>
+    <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+    <link rel="apple-touch-icon" sizes="76x76"
+          href="../assets/img/apple-icon.png"/>
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>Panel Administrador</title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no'
+          name='viewport'/>
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css"
+          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons"/>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"/>
+    <!-- CSS Files -->
+    <!--<link rel="stylesheet"
+        href="${request.contextPath}/assets/css/material-dashboard.css?v=2.1.2" />  -->
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/material-dashboard@2.1.0/assets/css/material-dashboard.css"/>
 
-	<link rel="stylesheet"
-		href="${request.contextPath}/assets/demo/demo.css" />
-	<link rel="stylesheet"
-		href="${request.contextPath}/assets/css/style-aea.css" />
+    <link rel="stylesheet"
+          href="${request.contextPath}/assets/demo/demo.css"/>
+    <link rel="stylesheet"
+          href="${request.contextPath}/assets/css/style-aea.css"/>
 
 </h:head>
 
 <h:body>
 
-	<div class="wrapper ">
-		<div class="sidebar" data-color="azure" data-background-color="black"
-			data-image="../assets/img/sidebar-1.jpg">
-			<!--
+    <div class="wrapper ">
+        <div class="sidebar" data-color="azure" data-background-color="black"
+             data-image="../assets/img/sidebar-1.jpg">
+            <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
         Tip 2: you can also add an image using data-image tag
     -->
-			<div class="logo">
-				<a class="simple-text logo-normal">iPrice</a>
-			</div>
-			<div class="sidebar-wrapper">
+            <div class="logo">
+                <a class="simple-text logo-normal">iPrice</a>
+            </div>
+            <div class="sidebar-wrapper">
 
-				<ul class="nav">
-
-
-
-					<li class="nav-item active"><a class="nav-link"
-						data-toggle="collapse" href="#datosIniciales" aria-expanded="true">
-							<i class="material-icons">dashboard</i>
-							<p>
-								Datos Iniciales<b class="caret"></b>
-							</p>
-					</a>
-						<div class="collapse show" id="datosIniciales" style="">
-							<ul class="nav">
-
-								<li class="nav-item "><a class="nav-link"
-									href="./admin-ciudad.xhtml"> <i class="material-icons">room</i>
-										<p>Localidades</p>
-								</a></li>
-						
-								<li class="nav-item "><a class="nav-link"
-									href="./admin-producto.xhtml"> <i class="material-icons">business</i>
-										<p>Productos</p>
-								</a></li>
-
-	<!--  
-								<li class="nav-item "><a class="nav-link"
-									href="./admin.xhtml"> <i class="material-icons">contacts</i>
-										<p>Administración Contactos</p>
-								</a></li>
--->	
-							</ul>
-						</div></li>
-						<!--  
-					<li class="nav-item active"><a class="nav-link"
-						data-toggle="collapse" href="#estudio" aria-expanded="true"> <i
-							class="material-icons">dashboard</i>
-							<p>
-								Estudio <b class="caret"></b>
-							</p>
-					</a>
-						<div class="collapse show" id="estudio" style="">
-							<ul class="nav">
-
-								<li class="nav-item "><a class="nav-link"
-									href="./admin-estudio.xhtml"> <i class="material-icons">
-											miscellaneous_services</i>
-										<p>Gestionar Estudio</p>
-								</a></li>
-								<li class="nav-item "><a class="nav-link"
-									href="./admin-estudio-actuarial.xhtml"> <i
-										class="material-icons">table_view</i>
-										<p>Cálculos Actuariales</p>
-								</a></li>
-
-							</ul>
-						</div></li>
-
-					<li class="nav-item active"><a class="nav-link"
-						data-toggle="collapse" href="#personal" aria-expanded="true">
-							<i class="material-icons">dashboard</i>
-							<p>
-								Personal <b class="caret"></b>
-							</p>
-					</a>
-						<div class="collapse show" id="personal" style="">
-							<ul class="nav">
+                <ul class="nav">
 
 
-								<li class="nav-item  "><a class="nav-link"
-									href="./admin-empleado.xhtml"> <i class="material-icons">emoji_people</i>
-										<p>Empleado</p>
-								</a></li>
-								<li class="nav-item "><a class="nav-link"
-									href="./admin-jubilado.xhtml"> <i class="material-icons">elderly</i>
-										<p>Jubilado</p>
-								</a></li>
+                    <li class="nav-item active"><a class="nav-link"
+                                                   data-toggle="collapse" href="#datosIniciales" aria-expanded="true">
+                        <i class="material-icons">dashboard</i>
+                        <p>
+                            Panel iPrice<b class="caret"></b>
+                        </p>
+                    </a>
+                        <div class="collapse show" id="datosIniciales" style="">
+                            <ul class="nav">
 
-							</ul>
-						</div></li>
+                                <li class="nav-item "><a class="nav-link"
+                                                         href="./admin-producto.xhtml"> <i
+                                        class="material-icons">business</i>
+                                    <p>Productos</p>
+                                </a></li>
 
+                                <li class="nav-item "><a class="nav-link"
+                                                         href="./admin-capr.xhtml"> <i
+                                        class="material-icons">business</i>
+                                    <p>Categoría Productos</p>
+                                </a></li>
 
+                                <li class="nav-item "><a class="nav-link"
+                                                         href="./admin-persona.xhtml"> <i
+                                        class="material-icons">contacts</i>
+                                    <p>Administración Total</p>
+                                </a></li>
+                                <li class="nav-item "><a class="nav-link"
+                                                         href="./admin-ordenes.xhtml"> <i
+                                        class="material-icons">table_view</i>
+                                    <p>Ordenes de Venta</p>
+                                </a></li>
 
-					<li class="nav-item active"><a class="nav-link"
-						data-toggle="collapse" href="#tablasReferenciales"
-						aria-expanded="true"> <i class="material-icons">dashboard</i>
-							<p>
-								Tablas Referenciales <b class="caret"></b>
-							</p>
-					</a>
-						<div class="collapse show" id="tablasReferenciales" style="">
-							<ul class="nav">
-								<li class="nav-item "><a class="nav-link"
-									href="./admin-iess.xhtml"> <i class="material-icons">grading</i>
-										<p>Iess</p>
-								</a></li>
-								<li class="nav-item "><a class="nav-link"
-									href="./admin-tablaiess.xhtml"> <i class="material-icons">grading</i>
-										<p>Tablaiess</p>
-								</a></li>
+                            </ul>
+                        </div>
+                    </li>
 
+                </ul>
+            </div>
+        </div>
 
-							</ul>
-						</div></li>
+        <div class="main-panel">
+            <!--  ************************ PONER AQUI MI NAVBAR -->
 
+            <div class="container-fluid" align="right">
+                <h:form>
+                    <p:menuButton
+                            styleClass=" btn-just-icon btn-white btn-fab btn-round "
+                            icon="pi pi-user-minus">
+                        <p:menuitem value="Cerrar Sesión"
+                                    actionListener="#{SesionValidaB.cerrarSesion}"
+                                    icon="pi pi-sign-out"/>
+                    </p:menuButton>
+                    <p:commandLink
+                            styleClass="navbar-toggler  btn-just-icon btn-white btn-fab btn-round">
+                        <i
+                                class="material-icons text_align-center visible-on-sidebar-regular"
+                                style="font-size: 2em">remove_red_eye</i>
+                    </p:commandLink>
+                </h:form>
+            </div>
 
+            <!-- End Navbar  -->
+            <!-- Poner content como clase -->
+            <div class="">
 
--->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ui:insert name="contenido">
+                            </ui:insert>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-
-
-				</ul>
-			</div>
-		</div>
-
-		<div class="main-panel">
-			<!--  ************************ PONER AQUI MI NAVBAR -->
-
-			<div class="container-fluid" align="right">
-				<h:form>
-					<p:menuButton
-						styleClass=" btn-just-icon btn-white btn-fab btn-round "
-						icon="pi pi-user-minus">
-						<p:menuitem value="Cerrar Sesión"
-							actionListener="#{SesionValidaB.cerrarSesion}"
-							icon="pi pi-sign-out" />
-					</p:menuButton>
-					<p:commandLink
-						styleClass="navbar-toggler  btn-just-icon btn-white btn-fab btn-round">
-						<i
-							class="material-icons text_align-center visible-on-sidebar-regular"
-							style="font-size: 2em">remove_red_eye</i>
-					</p:commandLink>
-				</h:form>
-			</div>
-
-			<!-- End Navbar  -->
-			<!-- Poner content como clase -->
-			<div class="">
-
-				<div class="container-fluid">
-					<div class="row">
-						<div class="col-md-12">
-							<ui:insert name="contenido">
-							</ui:insert>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-	</div>
+    </div>
 
 
-	<!--   Core JS Files   -->
+    <!--   Core JS Files   -->
 
-	<script src="../assets/js/core/popper.min.js"></script>
-	<script src="../assets/js/core/bootstrap-material-design.min.js"></script>
-	<script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+    <script src="../assets/js/core/popper.min.js"></script>
+    <script src="../assets/js/core/bootstrap-material-design.min.js"></script>
+    <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
 
-	<!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-	<script src="../assets/js/material-dashboard.js?v=2.1.2"
-		type="text/javascript"></script>
+    <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="../assets/js/material-dashboard.js?v=2.1.2"
+            type="text/javascript"></script>
 
 </h:body>
 

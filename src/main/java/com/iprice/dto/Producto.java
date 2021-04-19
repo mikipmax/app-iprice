@@ -27,7 +27,7 @@ public class Producto {
 	@ManyToOne
 	private CategoriaProducto caprId;
 	@Column(name = "prod_precio_opt")
-	private double prodPrecioOpt;
+	private double prodPrecioOpt=0;
 	@Column(name = "prod_precio_norm")
 	private double prodPrecioNorm;
 	@Column(name = "prod_precio_co_1")

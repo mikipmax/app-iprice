@@ -1,140 +1,133 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<link rel="stylesheet"
-		href="${request.contextPath}/assets/css/style-aea.css" />
-	<link rel="stylesheet"
-		href="https://cdn.jsdelivr.net/npm/material-dashboard@2.1.0/assets/css/material-dashboard.css" />
-	<style type="text/css">
-body {
-	background-image: url("./assets/img/login.jpg") !important;
-	background-size: cover;
-	background-position: top center;
-	background-color: black;
-	background-size: cover;
-}
+    <link rel="stylesheet"
+          href="${request.contextPath}/assets/css/style-aea.css"/>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/material-dashboard@2.1.0/assets/css/material-dashboard.css"/>
+    <style type="text/css">
+        body {
+            background-image: url("./assets/img/login.jpg") !important;
+            background-size: cover;
+            background-position: top center;
+            background-color: black;
+            background-size: cover;
+        }
 
-.footer {
-	position: fixed;
-	left: 0;
-	bottom: 0;
-	width: 100%;
-	color: white;
-	text-align: center;
-}
-</style>
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            color: white;
+            text-align: center;
+        }
+    </style>
 </h:head>
 <h:body>
 
 
-
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
-
-
-	<div align="center">
-		<h:form id="login">
-			<p:growl id="growlLogin" />
-
-			<div class="card card-nav-tabs" style="width: 35rem;">
-				<div class="card-header card-header-info">
-					<h2>Bienvenido a iPrice</h2>
-				</div>
-				<div class="card-body">
-
-					<b:inputText id="txtUsuario" required="true"
-						value="#{CredencialB.acceso.credCedula}" label="Usuario"
-						style="width: 15rem;" />
-					<b:inputSecret id="txtPassword" required="true"
-						style="width: 15rem;" value="#{CredencialB.acceso.credClave}"
-						label="Clave" />
-					<br />
-					<p:commandButton value="Iniciar Sesión"
-						styleClass="btn btn-outline-info btn-sm"
-						action="#{CredencialB.login}" update=" :login" />
-					<br /> <br />
-					<h3>¿No tiene cuenta?</h3>
-					<p:commandLink value="Registrese"
-						oncomplete="PF('dialogoRegistrar').show();"
-						update=" :iDialogoRegistrar" />
-				</div>
-
-			</div>
-
-		</h:form>
-	</div>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
 
 
-	<p:dialog id="iDialogoRegistrar" widgetVar="dialogoRegistrar"
-		header="Registro de Usuario" responsive="true" draggable="false"
-		resizable="false" closeOnEscape="true" appendTo="@(body)" modal="true"
-		position="top">
-		<h:form id="formRegistro">
+    <div align="center">
+        <h:form id="login">
+            <p:growl id="growlLogin"/>
 
-			<p:panelGrid columns="2">
-				<h:outputLabel for="txtCedula" value="Cédula/usuario *" />
-				<p:inputText id="txtCedula" required="true"
-					value="#{CredencialB.persona.credCedula}"
-					onclick="this.setSelectionRange(0, this.value.length)" />
-				<h:outputLabel for="txtClave" value="Clave *" />
-				<p:inputText id="txtClave" required="true" type="password"
-					value="#{CredencialB.persona.credClave}"
-					onclick="this.setSelectionRange(0, this.value.length)" />
-				<h:outputLabel for="txtNombre" value="Nombre *" />
-				<p:inputText id="txtNombre" required="true"
-					value="#{CredencialB.persona.persNombre}"
-					onclick="this.setSelectionRange(0, this.value.length)" />
-				<h:outputLabel for="txtApellido" value="Apellido *" />
-				<p:inputText id="txtApellido" required="true"
-					value="#{CredencialB.persona.persApellido}"
-					onclick="this.setSelectionRange(0, this.value.length)" />
-				<h:outputLabel for="txtTelefono" value="Teléfono/Celular *" />
-				<p:inputText id="txtTelefono" required="true"
-					value="#{CredencialB.persona.persTelefono}"
-					onclick="this.setSelectionRange(0, this.value.length)" />
-				<h:outputLabel for="txtDireccion" value="Dirección *" />
-				<p:inputText id="txtDireccion" required="true"
-					value="#{CredencialB.persona.persDireccion}"
-					onclick="this.setSelectionRange(0, this.value.length)" />
-				<h:outputLabel for="txtEmail" value="Email *" />
-				<p:inputText id="txtEmail" required="true"
-					value="#{CredencialB.persona.persEmail}"
-					onclick="this.setSelectionRange(0, this.value.length)" />
-				<h:outputLabel for="ciudad" value="Seleccione Localidad" />
-				<p:selectOneMenu id="ciudad" value="#{CredencialB.localidad.locaId}"
-					required="true">
-					<f:selectItems value="#{CredencialB.listaLocalidad}" var="localidad"
-						itemLabel="#{localidad.locaNombre}" itemValue="#{localidad.locaId}" />
-				</p:selectOneMenu>
+            <div class="card card-nav-tabs" style="width: 35rem;">
+                <div class="card-header card-header-info">
+                    <h2>Bienvenido a iPrice</h2>
+                </div>
+                <div class="card-body">
 
-				<p:commandButton value="Cancelar"
-					oncomplete="PF('dialogoRegistrar').hide();" />
+                    <b:inputText id="txtUsuario" required="true"
+                                 value="#{CredencialB.acceso.credCedula}" label="Usuario"
+                                 style="width: 15rem;"/>
+                    <b:inputSecret id="txtPassword" required="true"
+                                   style="width: 15rem;" value="#{CredencialB.acceso.credClave}"
+                                   label="Clave"/>
+                    <br/>
+                    <p:commandButton value="Iniciar Sesión"
+                                     styleClass="btn btn-outline-info btn-sm"
+                                     action="#{CredencialB.login}" update=" :login"/>
+                    <br/> <br/>
+                    <h3>¿No tiene cuenta?</h3>
+                    <p:commandLink value="Registrese"
+                                   oncomplete="PF('dialogoRegistrar').show();"
+                                   update=" :iDialogoRegistrar"/>
+                </div>
 
-				<p:commandButton value="Registrarse"
-					actionListener="#{CredencialB.registrarNuevoUsuario}"
-					update="formRegistro" oncomplete="PF('dialogoRegistrar').hide();" />
-				<p:column />
-			</p:panelGrid>
-		</h:form>
-	</p:dialog>
+            </div>
+
+        </h:form>
+    </div>
 
 
-	<footer class="footer">
-		<div class="container">
+    <p:dialog id="iDialogoRegistrar" widgetVar="dialogoRegistrar"
+              header="Registro de Usuario" responsive="true" draggable="false"
+              resizable="false" closeOnEscape="true" appendTo="@(body)" modal="true"
+              position="top">
+        <h:form id="formRegistro">
 
-			<div class="float-center">
+            <p:panelGrid columns="2">
+                <h:outputLabel for="txtCedula" value="Cédula/usuario *"/>
+                <p:inputText id="txtCedula" required="true"
+                             value="#{CredencialB.persona.credCedula}"
+                             onclick="this.setSelectionRange(0, this.value.length)"/>
+                <h:outputLabel for="txtClave" value="Clave *"/>
+                <p:inputText id="txtClave" required="true" type="password"
+                             value="#{CredencialB.persona.credClave}"
+                             onclick="this.setSelectionRange(0, this.value.length)"/>
+                <h:outputLabel for="txtNombre" value="Nombre *"/>
+                <p:inputText id="txtNombre" required="true"
+                             value="#{CredencialB.persona.persNombre}"
+                             onclick="this.setSelectionRange(0, this.value.length)"/>
+                <h:outputLabel for="txtApellido" value="Apellido *"/>
+                <p:inputText id="txtApellido" required="true"
+                             value="#{CredencialB.persona.persApellido}"
+                             onclick="this.setSelectionRange(0, this.value.length)"/>
+                <h:outputLabel for="txtTelefono" value="Teléfono/Celular *"/>
+                <p:inputText id="txtTelefono" required="true"
+                             value="#{CredencialB.persona.persTelefono}"
+                             onclick="this.setSelectionRange(0, this.value.length)"/>
+                <h:outputLabel for="txtDireccion" value="Dirección *"/>
+                <p:inputText id="txtDireccion" required="true"
+                             value="#{CredencialB.persona.persDireccion}"
+                             onclick="this.setSelectionRange(0, this.value.length)"/>
+                <h:outputLabel for="txtEmail" value="Email *"/>
+                <p:inputText id="txtEmail" required="true"
+                             value="#{CredencialB.persona.persEmail}"
+                             onclick="this.setSelectionRange(0, this.value.length)"/>
 
-				<h3 style="color: black; font-weight: bold">Copyright ©2020 All
-					rights reserved | Desarrollado por Michael Ponce y Estalin Gunza</h3>
-			</div>
-		</div>
-	</footer>
+                <p:commandButton value="Cancelar"
+                                 oncomplete="PF('dialogoRegistrar').hide();"/>
+
+                <p:commandButton value="Registrarse"
+                                 actionListener="#{CredencialB.registrarNuevoUsuario}"
+                                 update="formRegistro login:growlLogin" oncomplete="PF('dialogoRegistrar').hide();"/>
+                <p:column/>
+            </p:panelGrid>
+        </h:form>
+    </p:dialog>
+
+
+    <footer class="footer">
+        <div class="container">
+
+            <div class="float-center">
+
+                <h3 style="color: black; font-weight: bold">Copyright ©2020 All
+                    rights reserved | Desarrollado por Michael Ponce y Estalin Gunza</h3>
+            </div>
+        </div>
+    </footer>
 
 </h:body>
 </html>

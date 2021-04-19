@@ -26,7 +26,7 @@ import java.util.*;
 @Setter
 @SessionScope
 @Component("tiendaB")
-public class TiendaB implements Serializable {
+public class TiendaB  implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private Producto producto;
