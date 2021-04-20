@@ -128,12 +128,7 @@ public class ProductoB implements Serializable {
         PrimeFaces.current().executeScript("$('#staticBackdrop').modal('hide')");
     }
 
-    public void consumirApiWsp() {
-        restTemplate.getForObject("http://localhost:5000/wsp", String.class);
-        utileriaServicio.mensajeInfo("Precios de la competencia actualizados");
-        PrimeFaces.current().executeScript("$('#staticBackdrop').modal('hide')");
-        listar();
-    }
+
 
     public String getMensajeSeleccion() {
         if (comprobarProductosSeleccionados()) {
